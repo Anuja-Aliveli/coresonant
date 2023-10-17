@@ -12,7 +12,8 @@
 .task-item-container {
   display: flex;
   align-items: center;
-  height: 50px;
+  height: fit-content;
+  max-height: fit-content;
   margin-bottom: 20px;
 }
 .title-container {
@@ -37,6 +38,12 @@
 }
 .title {
   font-size: 22px;
+  max-width: 70%;
+  margin: 10px;
+}
+.icons-container {
+    display: flex;
+    align-items: center;
 }
 .no-task {
   display: flex;
@@ -47,4 +54,12 @@
 .no-task h3 {
   font-size: 30px;
   font-weight: bold;
+}
+@media (max-width: 576px) {
+  .list-container {
+    overflow: none;
+  }
+  .title {
+      font-size: 18px;
+  }
 }

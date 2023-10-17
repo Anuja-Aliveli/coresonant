@@ -118,3 +118,33 @@
   font-size: 40px;
   margin-left: 10px;
 }
+
+@media (max-width: 576px) {
+  .main-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .left-container {
+    width: 100%;
+    border-right: none;
+    height: auto;
+  }
+  .menu-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .menu-item-container {
+    width: 50%;
+    font-size: 15px;
+  }
+  .right-container {
+    width: 100%;
+  }
+  .input-container {
+    width: 70%;
+    height: 70%;
+  }
+}
