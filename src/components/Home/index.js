@@ -91,16 +91,31 @@ class Home extends Component {
   onEnter = (event, id) => {
     const { editText } = this.state;
     if (event.key === "Enter") {
-      this.setState((prevState) => ({
-        todoList: prevState.todoList.map((eachItem) => {
-          if (eachItem.id === id) {
-            return { ...eachItem, title: editText, isEdit: false };
-          }
-          return eachItem;
-        }),
-        editText: "",
-      }));
+      if (editText === "") {
+        alert("Please Enter Task");
+      } else {
+        this.setState((prevState) => ({
+          todoList: prevState.todoList.map((eachItem) => {
+            if (eachItem.id === id) {
+              return { ...eachItem, title: editText, isEdit: false };
+            }
+            return eachItem;
+          }),
+          editText: "",
+        }));
+      }
     }
+  };
+
+  onCheckbox = (id) => {
+    this.setState((prevState) => ({
+      todoList: prevState.todoList.map((eachItem) => {
+        if (eachItem.id === id) {
+          return { ...eachItem, completed: !eachItem.completed };
+        }
+        return eachItem;
+      }),
+    }));
   };
 
   renderAddTask = () => {
@@ -135,21 +150,40 @@ class Home extends Component {
         onEditTask={this.onEditTask}
         onEditInput={this.onEditInput}
         onEnter={this.onEnter}
+        onCheckbox={this.onCheckbox}
       />
     );
   };
 
   renderCompleted = () => {
-    const { todoList } = this.state;
+    const { todoList, editText } = this.state;
     return (
-      <List todoList={todoList} tabId={3} onDeleteTask={this.onDeleteTask} />
+      <List
+        todoList={todoList}
+        tabId={3}
+        onDeleteTask={this.onDeleteTask}
+        editText={editText}
+        onEditTask={this.onEditTask}
+        onEditInput={this.onEditInput}
+        onEnter={this.onEnter}
+        onCheckbox={this.onCheckbox}
+      />
     );
   };
 
   renderIncomplete = () => {
-    const { todoList } = this.state;
+    const { todoList, editText } = this.state;
     return (
-      <List todoList={todoList} tabId={4} onDeleteTask={this.onDeleteTask} />
+      <List
+        todoList={todoList}
+        tabId={4}
+        onDeleteTask={this.onDeleteTask}
+        editText={editText}
+        onEditTask={this.onEditTask}
+        onEditInput={this.onEditInput}
+        onEnter={this.onEnter}
+        onCheckbox={this.onCheckbox}
+      />
     );
   };
 
@@ -220,16 +254,6 @@ class Home extends Component {
               >
                 <AiFillCloseSquare className="left-icon" />
                 <h3>Incomplete Tasks</h3>
-              </button>
-              <button
-                type="button"
-                className={`menu-item-container${
-                  currentTab === "tab5" ? " active" : ""
-                }`}
-                onClick={() => this.onTab("tab5")}
-              >
-                <AiFillHeart className="left-icon" />
-                <h3>Favorite Tasks</h3>
               </button>
             </div>
           </div>
