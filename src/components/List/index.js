@@ -27,8 +27,20 @@ class List extends Component {
     this.props.onDeleteTask(id);
   };
 
+  onEditIcon = (id) => {
+    this.props.onEditTask(id);
+  };
+
+  onEdit = (event) => {
+    this.props.onEditInput(event);
+  };
+
+  onEnterBtn = (event, id) => {
+    this.props.onEnter(event, id);
+  };
+
   render() {
-    const { todoList, tabId } = this.props;
+    const { todoList, tabId, editText } = this.props;
     const resultList = this.getList(todoList, tabId);
     const heading =
       tabId === 2
@@ -39,26 +51,46 @@ class List extends Component {
     return (
       <div className="list-container">
         <h3 className="right-head">{heading}</h3>
-        {resultList.map((eachTask) => (
-          <div className="task-item-container">
-            <input
-              className="checkbox"
-              type="checkbox"
-              checked={eachTask.completed}
-            />
-            <div className="title-container">
-              <p className="title">{eachTask.title}</p>
-              <div className="icons-container">
-                <MdOutlineEdit className="left-icon" />
-                <MdOutlineDeleteOutline
-                  className="left-icon"
-                  onClick={() => this.onDeleteIcon(eachTask.id)}
-                />
-                <AiOutlineHeart className="left-icon" />
+        {resultList.length === 0 && (
+          <div className="no-task">
+            <h3>No Tasks</h3>
+          </div>
+        )}
+        {resultList.length !== 0 &&
+          resultList.map((eachTask) => (
+            <div className="task-item-container" key={eachTask.id}>
+              <input
+                className="checkbox"
+                type="checkbox"
+                checked={eachTask.completed}
+              />
+              <div className="title-container">
+                {eachTask.isEdit === true && (
+                  <input
+                    type="text"
+                    className="title"
+                    value={editText}
+                    onChange={this.onEdit}
+                    onKeyDown={(event) => this.onEnterBtn(event, eachTask.id)}
+                  />
+                )}
+                {eachTask.isEdit === false && (
+                  <p className="title">{eachTask.title}</p>
+                )}
+                <div className="icons-container">
+                  <MdOutlineEdit
+                    className="left-icon"
+                    onClick={() => this.onEditIcon(eachTask.id)}
+                  />
+                  <MdOutlineDeleteOutline
+                    className="left-icon"
+                    onClick={() => this.onDeleteIcon(eachTask.id)}
+                  />
+                  <AiOutlineHeart className="left-icon" />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     );
   }

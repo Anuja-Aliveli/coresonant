@@ -36,3 +36,13 @@
 .title {
   font-size: 22px;
 }
+.no-task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+.no-task h3 {
+  font-size: 30px;
+  font-weight: bold;
+}

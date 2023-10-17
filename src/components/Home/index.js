@@ -19,6 +19,7 @@ class Home extends Component {
     currentTab: "tab1",
     newTask: "",
     showTick: false,
+    editText: "",
   };
 
   componentDidMount = async () => {
@@ -26,7 +27,11 @@ class Home extends Component {
     const response = await fetch(url);
     const data = await response.json();
     if (response.ok === true) {
-      this.setState({ todoList: data });
+      const todoListWithEditFlag = data.map((eachTask) => ({
+        ...eachTask,
+        isEdit: false,
+      }));
+      this.setState({ todoList: todoListWithEditFlag });
     }
   };
 
@@ -48,6 +53,7 @@ class Home extends Component {
         id: todoList.length + 1,
         title: newTask,
         completed: false,
+        isEdit: false,
       };
       this.setState((prevState) => ({
         todoList: [...prevState.todoList, newTodoItem],
@@ -64,6 +70,37 @@ class Home extends Component {
     this.setState((prevState) => ({
       todoList: prevState.todoList.filter((eachItem) => eachItem.id !== id),
     }));
+  };
+
+  onEditTask = (id) => {
+    this.setState((prevState) => ({
+      todoList: prevState.todoList.map((eachItem) => {
+        if (eachItem.id === id) {
+          return { ...eachItem, isEdit: true };
+        }
+        return eachItem;
+      }),
+      editText: prevState.todoList.find((eachItem) => eachItem.id === id).title,
+    }));
+  };
+
+  onEditInput = (event) => {
+    this.setState({ editText: event.target.value });
+  };
+
+  onEnter = (event, id) => {
+    const { editText } = this.state;
+    if (event.key === "Enter") {
+      this.setState((prevState) => ({
+        todoList: prevState.todoList.map((eachItem) => {
+          if (eachItem.id === id) {
+            return { ...eachItem, title: editText, isEdit: false };
+          }
+          return eachItem;
+        }),
+        editText: "",
+      }));
+    }
   };
 
   renderAddTask = () => {
@@ -88,18 +125,32 @@ class Home extends Component {
   };
 
   renderTodoList = () => {
-    const { todoList } = this.state;
-    return <List todoList={todoList} tabId={2} onDeleteTask={this.onDeleteTask}/>;
+    const { todoList, editText } = this.state;
+    return (
+      <List
+        todoList={todoList}
+        tabId={2}
+        onDeleteTask={this.onDeleteTask}
+        editText={editText}
+        onEditTask={this.onEditTask}
+        onEditInput={this.onEditInput}
+        onEnter={this.onEnter}
+      />
+    );
   };
 
   renderCompleted = () => {
     const { todoList } = this.state;
-    return <List todoList={todoList} tabId={3} />;
+    return (
+      <List todoList={todoList} tabId={3} onDeleteTask={this.onDeleteTask} />
+    );
   };
 
   renderIncomplete = () => {
     const { todoList } = this.state;
-    return <List todoList={todoList} tabId={4} />;
+    return (
+      <List todoList={todoList} tabId={4} onDeleteTask={this.onDeleteTask} />
+    );
   };
 
   renderRight = () => {
