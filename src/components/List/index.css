@@ -1,0 +1,38 @@
+.list-container {
+  width: 95%;
+  height: 100%;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  overflow: auto;
+}
+.list-container h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.task-item-container {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin-bottom: 20px;
+}
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  height: 100%;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: none;
+  border-left: 3px solid crimson;
+  background-color: rgba(235, 198, 205, 0.336);
+  margin-right: 20px;
+}
+.checkbox {
+  width: 25px;
+  height: 25px;
+  margin-right: 15px;
+}
+.title {
+  font-size: 22px;
+}
