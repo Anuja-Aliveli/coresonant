@@ -1,0 +1,67 @@
+.home-page {
+  min-height: 100vh;
+  width: 100vw;
+  font-family: "Roboto";
+}
+.todohead {
+  background-color: crimson;
+  text-align: center;
+  font-size: 35px;
+  padding: 10px;
+  color: white;
+  margin: 0;
+  height: 10vh;
+}
+.main-container {
+  display: flex;
+  height: 90vh;
+}
+.left-container {
+  width: 30%;
+  border-right: 1px solid black;
+  height: 100%;
+}
+.right-container {
+  width: 70%;
+  height: 100%;
+}
+.profile-container {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  background-color: rgba(153, 155, 155, 0.089);
+  height: 50px;
+  border-bottom: 1px solid #bfbfbf;
+}
+.icon {
+  font-size: 30px;
+  margin-right: 20px;
+}
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.menu-item-container {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  height: 50px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+.left-icon {
+  font-size: 30px;
+  color: #dc143c;
+  margin-right: 20px;
+}
+.menu-item-container:hover, .active {
+  background-color: crimson;
+  color: white;
+}
+.menu-item-container:hover .left-icon, .active .left-icon{
+    color: white;
+}
