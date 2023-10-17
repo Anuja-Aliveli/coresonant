@@ -1,8 +1,8 @@
 import { Component } from "react";
 import {
   BsPersonBoundingBox,
-  BsListTask,
   BsFillClipboard2CheckFill,
+  BsFillPatchCheckFill,
 } from "react-icons/bs";
 import {
   AiFillPlusSquare,
@@ -17,6 +17,8 @@ class Home extends Component {
   state = {
     todoList: [],
     currentTab: "tab1",
+    newTask: "",
+    showTick: false,
   };
 
   componentDidMount = async () => {
@@ -32,19 +34,62 @@ class Home extends Component {
     this.setState({ currentTab: id });
   };
 
-  renderAddTask = () => (
-    <div className="input-container">
-      <h3 className="right-head">Create Task</h3>
-      <input type="text" placeholder="Ex: React Coding" />
-      <button type="button" className="add-btn">
-        Add Task
-      </button>
-    </div>
-  );
+  onInput = (event) => {
+    this.setState({ newTask: event.target.value });
+  };
+
+  onAddBtn = () => {
+    const { newTask, todoList } = this.state;
+    if (newTask.length === 0) {
+      alert("Please Add Task");
+    } else {
+      const newTodoItem = {
+        userId: 1,
+        id: todoList.length + 1,
+        title: newTask,
+        completed: false,
+      };
+      this.setState((prevState) => ({
+        todoList: [...prevState.todoList, newTodoItem],
+        newTask: "",
+        showTick: true,
+      }));
+      setTimeout(() => {
+        this.setState({ showTick: false });
+      }, 1000);
+    }
+  };
+
+  onDeleteTask = (id) => {
+    this.setState((prevState) => ({
+      todoList: prevState.todoList.filter((eachItem) => eachItem.id !== id),
+    }));
+  };
+
+  renderAddTask = () => {
+    const { newTask, showTick } = this.state;
+    return (
+      <div className="input-container">
+        <h3 className="right-head">Create Task</h3>
+        <input
+          type="text"
+          placeholder="Ex: React Coding"
+          onChange={this.onInput}
+          value={newTask}
+        />
+        <div className="tick-container">
+          <button type="button" className="add-btn" onClick={this.onAddBtn}>
+            Add Task
+          </button>
+          {showTick && <BsFillPatchCheckFill className="icon-tick" />}
+        </div>
+      </div>
+    );
+  };
 
   renderTodoList = () => {
     const { todoList } = this.state;
-    return <List todoList={todoList} tabId={2} />;
+    return <List todoList={todoList} tabId={2} onDeleteTask={this.onDeleteTask}/>;
   };
 
   renderCompleted = () => {

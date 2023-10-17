@@ -23,10 +23,19 @@ class List extends Component {
     }
   };
 
+  onDeleteIcon = (id) => {
+    this.props.onDeleteTask(id);
+  };
+
   render() {
     const { todoList, tabId } = this.props;
     const resultList = this.getList(todoList, tabId);
-    const heading = tabId === 2 ? 'My Tasks' : tabId === 3 ? 'Finished Tasks' : 'Pending Tasks'
+    const heading =
+      tabId === 2
+        ? "My Tasks"
+        : tabId === 3
+        ? "Finished Tasks"
+        : "Pending Tasks";
     return (
       <div className="list-container">
         <h3 className="right-head">{heading}</h3>
@@ -41,7 +50,10 @@ class List extends Component {
               <p className="title">{eachTask.title}</p>
               <div className="icons-container">
                 <MdOutlineEdit className="left-icon" />
-                <MdOutlineDeleteOutline className="left-icon" />
+                <MdOutlineDeleteOutline
+                  className="left-icon"
+                  onClick={() => this.onDeleteIcon(eachTask.id)}
+                />
                 <AiOutlineHeart className="left-icon" />
               </div>
             </div>

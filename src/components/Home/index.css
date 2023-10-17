@@ -61,6 +61,7 @@
   font-size: 30px;
   color: #dc143c;
   margin-right: 20px;
+  cursor: pointer;
 }
 .menu-item-container:hover,
 .active {
@@ -107,4 +108,13 @@
   outline: none;
   border: none;
   border-radius: 5px;
+}
+.tick-container {
+    display: flex;
+    align-items: center;
+}
+.icon-tick {
+    color: #0fb132;
+    font-size: 40px;
+    margin-left: 10px;    
 }
